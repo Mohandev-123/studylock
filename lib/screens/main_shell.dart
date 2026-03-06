@@ -15,6 +15,8 @@ class MainShell extends ConsumerStatefulWidget {
 }
 
 class _MainShellState extends ConsumerState<MainShell> {
+  int? _lastTabIndex;
+
   @override
   void initState() {
     super.initState();
@@ -28,6 +30,14 @@ class _MainShellState extends ConsumerState<MainShell> {
   Widget build(BuildContext context) {
     final currentIndex = ref.watch(currentTabProvider);
     final colors = AppColors.of(context);
+
+    if (_lastTabIndex != currentIndex) {
+      _lastTabIndex = currentIndex;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (!mounted) return;
+        ScaffoldMessenger.of(context).hideCurrentSnackBar();
+      });
+    }
 
     final screens = <Widget>[
       const HomeScreen(),
@@ -47,7 +57,10 @@ class _MainShellState extends ConsumerState<MainShell> {
         ),
         child: BottomNavigationBar(
           currentIndex: currentIndex,
-          onTap: (index) => ref.read(currentTabProvider.notifier).state = index,
+          onTap: (index) {
+            ScaffoldMessenger.of(context).hideCurrentSnackBar();
+            ref.read(currentTabProvider.notifier).state = index;
+          },
           type: BottomNavigationBarType.fixed,
           backgroundColor: Colors.transparent,
           elevation: 0,

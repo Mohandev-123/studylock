@@ -154,7 +154,6 @@ void main() {
   }
 
   // Copy the lock + clock part centered with some padding
-  final padding = 108; // ~10% safe zone for adaptive
   for (int y = 0; y < size; y++) {
     for (int x = 0; x < size; x++) {
       final px = image.getPixel(x, y);
@@ -177,8 +176,8 @@ void main() {
     'assets/icon/icon_foreground.png',
   ).writeAsBytesSync(img.encodePng(fgImage));
 
-  print('✓ Generated assets/icon/icon.png (1024x1024)');
-  print('✓ Generated assets/icon/icon_foreground.png (1024x1024)');
+  stdout.writeln('Generated assets/icon/icon.png (1024x1024)');
+  stdout.writeln('Generated assets/icon/icon_foreground.png (1024x1024)');
 }
 
 int _lerp(int a, int b, double t) => (a + (b - a) * t).round().clamp(0, 255);

@@ -1,4 +1,4 @@
-package com.example.study_lock
+package com.studylock.app
 
 import android.accessibilityservice.AccessibilityService
 import android.accessibilityservice.AccessibilityServiceInfo

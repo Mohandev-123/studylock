@@ -1,13 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!-- Required for querying installed packages on Android 11+ -->
-    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" />
-    <!-- Foreground service permission -->
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <!-- Receive boot completed to restart service -->
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <!-- System alert window for overlay -->
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <!-- Notifications for focus session events (Android 13+) -->
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
@@ -41,7 +35,7 @@
             android:launchMode="singleTop"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
             android:excludeFromRecents="true"
-            android:taskAffinity="com.example.study_lock.lockscreen"
+            android:taskAffinity="com.studylock.app.lockscreen"
             android:showOnLockScreen="true" />
 
         <!-- Accessibility Service for monitoring foreground apps -->
@@ -74,6 +68,11 @@
             android:value="2" />
     </application>
     <queries>
+        <!-- Discover launchable apps without broad package visibility permission -->
+        <intent>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent>
         <intent>
             <action android:name="android.intent.action.PROCESS_TEXT"/>
             <data android:mimeType="text/plain"/>

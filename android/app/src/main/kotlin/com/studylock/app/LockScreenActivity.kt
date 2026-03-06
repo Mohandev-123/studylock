@@ -1,4 +1,4 @@
-package com.example.study_lock
+package com.studylock.app
 
 import android.app.Activity
 import android.os.Bundle

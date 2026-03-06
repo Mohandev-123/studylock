@@ -101,6 +101,7 @@ class HomeScreen extends ConsumerWidget {
   ) {
     return GestureDetector(
       onTap: () {
+        ScaffoldMessenger.of(context).hideCurrentSnackBar();
         ref.read(currentTabProvider.notifier).state = 1;
       },
       child: Container(
@@ -248,6 +249,7 @@ class HomeScreen extends ConsumerWidget {
             height: 52,
             child: OutlinedButton(
               onPressed: () {
+                ScaffoldMessenger.of(context).hideCurrentSnackBar();
                 ref.read(currentTabProvider.notifier).state = 1;
               },
               style: OutlinedButton.styleFrom(
@@ -272,9 +274,13 @@ class HomeScreen extends ConsumerWidget {
             child: ElevatedButton(
               onPressed: () {
                 if (!hasBlockedApps) {
-                  ScaffoldMessenger.of(context).showSnackBar(
+                  final messenger = ScaffoldMessenger.of(context);
+                  messenger.showSnackBar(
                     SnackBar(
-                      content: const Text('Please select apps to block first'),
+                      content: const Text(
+                        'Please select apps to block first',
+                        style: TextStyle(color: Colors.white),
+                      ),
                       backgroundColor: colors.snackBarBg,
                       behavior: SnackBarBehavior.floating,
                       shape: RoundedRectangleBorder(
@@ -284,6 +290,7 @@ class HomeScreen extends ConsumerWidget {
                         label: 'Select',
                         textColor: AppColors.primaryLight,
                         onPressed: () {
+                          messenger.hideCurrentSnackBar();
                           ref.read(currentTabProvider.notifier).state = 1;
                         },
                       ),

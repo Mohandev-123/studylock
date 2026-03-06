@@ -1,4 +1,4 @@
-package com.example.study_lock
+package com.studylock.app
 
 import android.content.BroadcastReceiver
 import android.content.Context

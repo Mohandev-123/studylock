@@ -1,0 +1,4 @@
+storeFile=../keystore/study-lock-release.jks
+storePassword=replace-with-keystore-password
+keyAlias=study-lock
+keyPassword=replace-with-key-password

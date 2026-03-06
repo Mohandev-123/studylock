@@ -1,10 +1,9 @@
-package com.example.study_lock
+package com.studylock.app
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.ComponentName
 import android.content.Intent
-import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Canvas
@@ -185,6 +184,15 @@ class MainActivity : FlutterActivity() {
     private fun getInstalledApps(): List<Map<String, Any?>> {
         val pm = packageManager
         val apps = mutableListOf<Map<String, Any?>>()
+        val systemExclusions = setOf(
+            "com.android.settings",
+            "com.android.phone",
+            "com.android.emergency",
+            "com.android.providers.contacts",
+            "com.google.android.permissioncontroller",
+            "com.google.android.packageinstaller",
+            "com.android.systemui",
+        )
 
         // Get all packages that have a launcher intent (appear in app drawer)
         val launchIntent = Intent(Intent.ACTION_MAIN, null)
@@ -196,50 +204,40 @@ class MainActivity : FlutterActivity() {
             pm.queryIntentActivities(launchIntent, 0)
         }
 
-        val launchablePackages = launchableApps.map { it.activityInfo.packageName }.toSet()
+        for (resolveInfo in launchableApps) {
+            val targetPackage = resolveInfo.activityInfo.packageName
 
-        val packages = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            pm.getInstalledApplications(PackageManager.ApplicationInfoFlags.of(0))
-        } else {
-            @Suppress("DEPRECATION")
-            pm.getInstalledApplications(PackageManager.GET_META_DATA)
-        }
-
-        for (appInfo in packages) {
-            // Skip our own app
-            if (appInfo.packageName == packageName) continue
-
-            // Only include apps that appear in the launcher (app drawer)
-            if (!launchablePackages.contains(appInfo.packageName)) continue
-
-            // Skip core system utilities that users wouldn't want to block
-            val systemExclusions = listOf(
-                "com.android.settings",
-                "com.android.phone",
-                "com.android.emergency",
-                "com.android.providers.contacts",
-                "com.google.android.permissioncontroller",
-                "com.google.android.packageinstaller",
-                "com.android.systemui",
-            )
-            if (systemExclusions.contains(appInfo.packageName)) continue
+            // Skip our own app and core system utilities users should not block.
+            if (targetPackage == packageName) continue
+            if (systemExclusions.contains(targetPackage)) continue
 
             try {
+                val appInfo = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    pm.getApplicationInfo(
+                        targetPackage,
+                        PackageManager.ApplicationInfoFlags.of(0),
+                    )
+                } else {
+                    @Suppress("DEPRECATION")
+                    pm.getApplicationInfo(targetPackage, 0)
+                }
                 val appName = pm.getApplicationLabel(appInfo).toString()
                 val icon = pm.getApplicationIcon(appInfo)
                 val iconBytes = drawableToBytes(icon)
 
                 apps.add(mapOf(
                     "appName" to appName,
-                    "packageName" to appInfo.packageName,
+                    "packageName" to targetPackage,
                     "appIcon" to iconBytes,
                 ))
             } catch (e: Exception) {
-                Log.w(TAG, "Error loading app info for ${appInfo.packageName}", e)
+                Log.w(TAG, "Error loading app info for $targetPackage", e)
             }
         }
 
-        return apps.sortedBy { (it["appName"] as String).lowercase() }
+        return apps
+            .distinctBy { it["packageName"] }
+            .sortedBy { (it["appName"] as String).lowercase() }
     }
 
     private fun drawableToBytes(drawable: Drawable): ByteArray {

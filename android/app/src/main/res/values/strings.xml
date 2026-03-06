@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="accessibility_service_description">TimeLock monitors which app is in the foreground to block selected apps during your focus session. This service only checks the current app name and does not read or collect any personal data.</string>
+    <string name="accessibility_service_description">Study Lock monitors which app is in the foreground to block selected apps during your focus session. This service only checks the current app name and does not read or collect any personal data.</string>
 </resources>
