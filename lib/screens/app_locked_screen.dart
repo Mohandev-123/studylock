@@ -12,6 +12,7 @@ class AppLockedScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final colors = AppColors.of(context);
     final timerState = ref.watch(timerProvider);
     final displayHours = timerState.isActive
         ? timerState.remaining.inHours
@@ -22,129 +23,168 @@ class AppLockedScreen extends ConsumerWidget {
     final displaySeconds = timerState.isActive
         ? timerState.remaining.inSeconds % 60
         : 0;
+
     return Scaffold(
       body: Container(
         width: double.infinity,
         height: double.infinity,
-        decoration: AppColors.of(context).scaffoldGradientDecoration,
+        decoration: colors.scaffoldGradientDecoration,
         child: SafeArea(
-          child: Column(
-            children: [
-              const Spacer(flex: 2),
-              // Lock icon with glow
-              _buildLockIcon(),
-              const SizedBox(height: 28),
-              // Title
-              const Text(
-                'App Locked',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 34,
-                  fontWeight: FontWeight.bold,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            child: Column(
+              children: [
+                const Spacer(flex: 2),
+                _buildLockIcon(colors),
+                const SizedBox(height: 24),
+                Text(
+                  'App Locked',
+                  style: TextStyle(
+                    color: colors.textPrimary,
+                    fontSize: 34,
+                    fontWeight: FontWeight.w700,
+                  ),
                 ),
-              ),
-              const SizedBox(height: 12),
-              // Subtitle
-              Text(
-                'You can open this app after the timer\nends.',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.white.withValues(alpha: 0.45),
-                  fontSize: 16,
-                  height: 1.5,
+                const SizedBox(height: 12),
+                Text(
+                  'You can open this app after the timer\nends.',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: colors.textSecondary,
+                    fontSize: 16,
+                    height: 1.5,
+                  ),
                 ),
-              ),
-              const SizedBox(height: 40),
-              // Timer display
-              _buildTimerDisplay(displayHours, displayMinutes, displaySeconds),
-              const SizedBox(height: 8),
-              // REMAINING label
-              Text(
-                'REMAINING',
-                style: TextStyle(
-                  color: Colors.white.withValues(alpha: 0.35),
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
-                  letterSpacing: 2,
+                const SizedBox(height: 28),
+                _buildTimerDisplay(
+                  displayHours,
+                  displayMinutes,
+                  displaySeconds,
+                  colors,
                 ),
-              ),
-              const SizedBox(height: 48),
-              // Stay focused text
-              Text(
-                'Stay focused.',
-                style: TextStyle(
-                  color: Colors.white.withValues(alpha: 0.3),
-                  fontSize: 18,
-                  fontStyle: FontStyle.italic,
+                const SizedBox(height: 10),
+                Text(
+                  'REMAINING',
+                  style: TextStyle(
+                    color: colors.textTertiary,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w700,
+                    letterSpacing: 1.8,
+                  ),
                 ),
-              ),
-              const Spacer(flex: 3),
-              // View Focus Dashboard button
-              _buildDashboardButton(context),
-              const SizedBox(height: 32),
-            ],
+                const SizedBox(height: 32),
+                Text(
+                  'Stay focused.',
+                  style: TextStyle(
+                    color: colors.textTertiary,
+                    fontSize: 18,
+                    fontStyle: FontStyle.italic,
+                  ),
+                ),
+                const Spacer(flex: 3),
+                _buildDashboardButton(context),
+                const SizedBox(height: 28),
+              ],
+            ),
           ),
         ),
       ),
     );
   }
 
-  Widget _buildLockIcon() {
-    return SizedBox(
-      width: 180,
-      height: 180,
-      child: Stack(
-        alignment: Alignment.center,
+  Widget _buildLockIcon(AppColors colors) {
+    return Container(
+      width: 168,
+      height: 168,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        gradient: RadialGradient(
+          colors: [
+            AppColors.primary.withValues(alpha: 0.24),
+            AppColors.primary.withValues(alpha: 0.08),
+            Colors.transparent,
+          ],
+          stops: const [0.34, 0.68, 1.0],
+        ),
+      ),
+      child: Center(
+        child: Container(
+          width: 120,
+          height: 120,
+          decoration: BoxDecoration(
+            color: colors.card,
+            shape: BoxShape.circle,
+            border: Border.all(color: colors.cardBorder),
+            boxShadow: [
+              BoxShadow(
+                color: AppColors.primary.withValues(alpha: 0.18),
+                blurRadius: 22,
+                spreadRadius: 1,
+              ),
+            ],
+          ),
+          child: const Icon(Icons.lock, color: AppColors.primary, size: 54),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTimerDisplay(int h, int m, int s, AppColors colors) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 18),
+      decoration: BoxDecoration(
+        color: colors.card,
+        borderRadius: BorderRadius.circular(22),
+        border: Border.all(color: colors.cardBorder),
+      ),
+      child: Column(
         children: [
-          // Outer glow
-          Container(
-            width: 180,
-            height: 180,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              gradient: RadialGradient(
-                colors: [
-                  const Color(0xFF6B5B95).withValues(alpha: 0.2),
-                  const Color(0xFF6B5B95).withValues(alpha: 0.08),
-                  Colors.transparent,
-                ],
-                stops: const [0.3, 0.7, 1.0],
-              ),
-            ),
-          ),
-          // Inner circle
-          Container(
-            width: 140,
-            height: 140,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: const Color(0xFF1A1E35).withValues(alpha: 0.8),
-              border: Border.all(
-                color: const Color(0xFF3A3555).withValues(alpha: 0.6),
-                width: 2,
-              ),
-              boxShadow: [
-                BoxShadow(
-                  color: const Color(0xFF6B5B95).withValues(alpha: 0.15),
-                  blurRadius: 30,
-                  spreadRadius: 5,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.baseline,
+            textBaseline: TextBaseline.alphabetic,
+            children: [
+              Text(
+                '$h',
+                style: TextStyle(
+                  color: colors.textPrimary,
+                  fontSize: 62,
+                  fontWeight: FontWeight.w700,
                 ),
-              ],
-            ),
+              ),
+              Text(
+                'h',
+                style: TextStyle(
+                  color: colors.textTertiary,
+                  fontSize: 28,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              const SizedBox(width: 10),
+              Text(
+                m.toString().padLeft(2, '0'),
+                style: TextStyle(
+                  color: colors.textPrimary,
+                  fontSize: 62,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              Text(
+                'm',
+                style: TextStyle(
+                  color: colors.textTertiary,
+                  fontSize: 28,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ],
           ),
-          // Lock icon container (square with rounded corners)
-          Container(
-            width: 90,
-            height: 90,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(18),
-              color: Colors.white.withValues(alpha: 0.08),
-              border: Border.all(color: Colors.white.withValues(alpha: 0.06)),
-            ),
-            child: Icon(
-              Icons.lock,
-              color: Colors.white.withValues(alpha: 0.85),
-              size: 50,
+          Text(
+            '${s.toString().padLeft(2, '0')}s',
+            style: TextStyle(
+              color: colors.textSecondary,
+              fontSize: 20,
+              fontWeight: FontWeight.w500,
             ),
           ),
         ],
@@ -152,89 +192,28 @@ class AppLockedScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildTimerDisplay(int h, int m, int s) {
-    return Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.baseline,
-          textBaseline: TextBaseline.alphabetic,
-          children: [
-            Text(
-              '$h',
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 64,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            Text(
-              'h',
-              style: TextStyle(
-                color: Colors.white.withValues(alpha: 0.45),
-                fontSize: 28,
-                fontWeight: FontWeight.w400,
-              ),
-            ),
-            const SizedBox(width: 10),
-            Text(
-              m.toString().padLeft(2, '0'),
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 64,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            Text(
-              'm',
-              style: TextStyle(
-                color: Colors.white.withValues(alpha: 0.45),
-                fontSize: 28,
-                fontWeight: FontWeight.w400,
-              ),
-            ),
-          ],
-        ),
-        Text(
-          '${s.toString().padLeft(2, '0')}s',
-          style: TextStyle(
-            color: Colors.white.withValues(alpha: 0.4),
-            fontSize: 22,
-            fontWeight: FontWeight.w400,
-          ),
-        ),
-      ],
-    );
-  }
-
   Widget _buildDashboardButton(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 32),
-      child: SizedBox(
-        width: double.infinity,
-        height: 56,
-        child: ElevatedButton(
-          onPressed: () {
-            Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(builder: (_) => const MainShell()),
-              (route) => false,
-            );
-          },
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.white,
-            foregroundColor: const Color(0xFF0A0E21),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(28),
-            ),
-            elevation: 0,
-            textStyle: const TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w600,
-            ),
+    return SizedBox(
+      width: double.infinity,
+      height: 56,
+      child: ElevatedButton(
+        onPressed: () {
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (_) => const MainShell()),
+            (route) => false,
+          );
+        },
+        style: ElevatedButton.styleFrom(
+          backgroundColor: AppColors.primary,
+          foregroundColor: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(28),
           ),
-          child: const Text('View Focus Dashboard'),
+          elevation: 0,
+          textStyle: const TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
         ),
+        child: const Text('View Focus Dashboard'),
       ),
     );
   }

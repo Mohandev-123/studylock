@@ -449,8 +449,8 @@ class _ChartPainter extends CustomPainter {
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
         colors: [
-          const Color(0xFF4466FF).withValues(alpha: 0.3),
-          const Color(0xFF4466FF).withValues(alpha: 0.02),
+          AppColors.primaryLight.withValues(alpha: 0.28),
+          AppColors.primaryLight.withValues(alpha: 0.04),
         ],
       ).createShader(Rect.fromLTWH(0, 0, size.width, size.height));
 
@@ -458,7 +458,7 @@ class _ChartPainter extends CustomPainter {
 
     // Draw line
     final linePaint = Paint()
-      ..color = const Color(0xFF4466FF)
+      ..color = AppColors.primary
       ..style = PaintingStyle.stroke
       ..strokeWidth = 3
       ..strokeCap = StrokeCap.round;
@@ -467,7 +467,7 @@ class _ChartPainter extends CustomPainter {
 
     // Glow effect on line
     final glowPaint = Paint()
-      ..color = const Color(0xFF4466FF).withValues(alpha: 0.3)
+      ..color = AppColors.primaryLight.withValues(alpha: 0.35)
       ..style = PaintingStyle.stroke
       ..strokeWidth = 8
       ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 6);

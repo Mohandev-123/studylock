@@ -62,7 +62,7 @@ class _AppSelectionScreenState extends ConsumerState<AppSelectionScreen> {
     _hasChanges = false;
 
     if (widget.isTab) {
-      // In tab mode — show confirmation snackbar and switch to Home tab
+      // In tab mode - show confirmation snackbar and switch to Home tab
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
@@ -81,7 +81,7 @@ class _AppSelectionScreenState extends ConsumerState<AppSelectionScreen> {
       // Switch to Home tab
       ref.read(currentTabProvider.notifier).state = 0;
     } else {
-      // In pushed mode — pop back
+      // In pushed mode - pop back
       Navigator.pop(context);
     }
   }
@@ -138,7 +138,7 @@ class _AppSelectionScreenState extends ConsumerState<AppSelectionScreen> {
                       width: 8,
                       height: 8,
                       decoration: const BoxDecoration(
-                        color: Color(0xFFFF8C00),
+                        color: AppColors.accent,
                         shape: BoxShape.circle,
                       ),
                     ),
@@ -146,7 +146,7 @@ class _AppSelectionScreenState extends ConsumerState<AppSelectionScreen> {
                     Text(
                       'Unsaved',
                       style: TextStyle(
-                        color: const Color(0xFFFF8C00).withValues(alpha: 0.8),
+                        color: AppColors.accent.withValues(alpha: 0.85),
                         fontSize: 12,
                       ),
                     ),
@@ -243,7 +243,7 @@ class _AppSelectionScreenState extends ConsumerState<AppSelectionScreen> {
                     ElevatedButton(
                       onPressed: () => ref.invalidate(installedAppsProvider),
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFF2244FF),
+                        backgroundColor: AppColors.primary,
                       ),
                       child: const Text(
                         'Retry',
@@ -261,11 +261,11 @@ class _AppSelectionScreenState extends ConsumerState<AppSelectionScreen> {
     );
 
     if (widget.isTab) {
-      // Tab mode — no Scaffold, MainShell provides it
+      // Tab mode - no Scaffold, MainShell provides it
       return content;
     }
 
-    // Pushed mode — own Scaffold with gradient
+    // Pushed mode - own Scaffold with gradient
     return Scaffold(
       body: Container(
         width: double.infinity,
@@ -402,7 +402,7 @@ class _AppSelectionScreenState extends ConsumerState<AppSelectionScreen> {
         child: ElevatedButton(
           onPressed: () => _onConfirm(allApps),
           style: ElevatedButton.styleFrom(
-            backgroundColor: const Color(0xFF2244FF),
+            backgroundColor: AppColors.primary,
             foregroundColor: Colors.white,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(28),

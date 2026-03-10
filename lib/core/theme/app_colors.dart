@@ -1,147 +1,140 @@
 import 'package:flutter/material.dart';
 
 /// Centralized theme-aware color provider for the app.
-/// Usage: `final colors = AppColors.of(context);`
 class AppColors {
   final bool isDark;
 
   const AppColors._(this.isDark);
-
-  /// Named constructors for unit tests (no BuildContext needed).
   const AppColors.testDark() : isDark = true;
   const AppColors.testLight() : isDark = false;
 
-  factory AppColors.of(BuildContext context) {
-    return AppColors._(Theme.of(context).brightness == Brightness.dark);
-  }
+  factory AppColors.of(BuildContext context) =>
+      AppColors._(Theme.of(context).brightness == Brightness.dark);
 
-  // ─── Constants (same in both modes) ────────────────────────────────
-  static const Color primary = Color(0xFF2244FF);
-  static const Color primaryLight = Color(0xFF4466FF);
-  static const Color accent = Color(0xFFFF8C00);
-  static const Color error = Color(0xFFE53935);
-  static const Color success = Color(0xFF4CAF50);
+  // Brand palette (light-blue + white direction)
+  static const Color primary = Color(0xFF2D9CFF);
+  static const Color primaryLight = Color(0xFF78C8FF);
+  static const Color accent = Color(0xFF54B4FF);
+  static const Color error = Color(0xFFD14343);
+  static const Color success = Color(0xFF2FBF8F);
 
-  // ─── Scaffold Gradient ─────────────────────────────────────────────
   List<Color> get scaffoldGradient => isDark
-      ? const [Color(0xFF0A0E21), Color(0xFF0D1333), Color(0xFF070B1A)]
-      : const [Color(0xFFF2F4F8), Color(0xFFE8EBF2), Color(0xFFF5F6FA)];
+      ? const [Color(0xFF0B1D35), Color(0xFF0E2746), Color(0xFF123057)]
+      : const [Color(0xFFF2FAFF), Color(0xFFE8F4FF), Color(0xFFF8FCFF)];
 
   BoxDecoration get scaffoldGradientDecoration => BoxDecoration(
     gradient: LinearGradient(
       begin: Alignment.topCenter,
       end: Alignment.bottomCenter,
       colors: scaffoldGradient,
-      stops: const [0.0, 0.5, 1.0],
+      stops: const [0.0, 0.55, 1.0],
     ),
   );
 
-  // ─── Card / Surface ────────────────────────────────────────────────
   Color get card =>
-      isDark ? const Color(0xFF141832).withAlpha(179) : Colors.white;
-
-  Color get cardBorder =>
-      isDark ? Colors.white.withAlpha(15) : Colors.black.withAlpha(20);
+      isDark ? const Color(0xFF143354).withAlpha(214) : Colors.white;
+  Color get cardBorder => isDark
+      ? Colors.white.withAlpha(26)
+      : const Color(0xFF2D9CFF).withAlpha(48);
 
   Color get surface =>
-      isDark ? const Color(0xFF1A1E35) : const Color(0xFFF0F1F7);
-
+      isDark ? const Color(0xFF163B60) : const Color(0xFFEDF6FF);
   Color get surfaceHigh =>
-      isDark ? const Color(0xFF1A1E35).withAlpha(179) : Colors.white;
-
+      isDark ? const Color(0xFF193F66).withAlpha(196) : Colors.white;
   Color get surfaceVariant =>
-      isDark ? const Color(0xFF2A2E45) : const Color(0xFFE2E4ED);
+      isDark ? const Color(0xFF21507A) : const Color(0xFFDBEEFF);
 
-  // ─── Dialog / Popup ────────────────────────────────────────────────
-  Color get dialogBg => isDark ? const Color(0xFF1A1E35) : Colors.white;
-
+  Color get dialogBg => isDark ? const Color(0xFF163B60) : Colors.white;
   Color get snackBarBg =>
-      isDark ? const Color(0xFF1A1E35) : const Color(0xFF323644);
+      isDark ? const Color(0xFF163B60) : const Color(0xFF1E4E7F);
 
-  // ─── Text ──────────────────────────────────────────────────────────
-  Color get textPrimary => isDark ? Colors.white : const Color(0xFF1A1A2E);
-
+  Color get textPrimary =>
+      isDark ? const Color(0xFFE9F5FF) : const Color(0xFF153A60);
   Color get textSecondary =>
-      isDark ? Colors.white.withAlpha(153) : Colors.black.withAlpha(140);
-
+      isDark ? Colors.white.withAlpha(186) : const Color(0xFF2E5A84);
   Color get textTertiary =>
-      isDark ? Colors.white.withAlpha(102) : Colors.black.withAlpha(97);
-
+      isDark ? Colors.white.withAlpha(150) : const Color(0xFF5A7EA3);
   Color get textQuaternary =>
-      isDark ? Colors.white.withAlpha(77) : Colors.black.withAlpha(64);
-
+      isDark ? Colors.white.withAlpha(112) : const Color(0xFF7898BA);
   Color get textHint =>
-      isDark ? Colors.white.withAlpha(115) : Colors.black.withAlpha(89);
+      isDark ? Colors.white.withAlpha(133) : const Color(0xFF6B8DAF);
 
-  // ─── Bottom Navigation ─────────────────────────────────────────────
-  Color get bottomNavBg => isDark ? const Color(0xFF0D1130) : Colors.white;
-
-  Color get bottomNavBorder =>
-      isDark ? Colors.white.withAlpha(15) : Colors.black.withAlpha(20);
-
+  Color get bottomNavBg => isDark ? const Color(0xFF0F2B49) : Colors.white;
+  Color get bottomNavBorder => isDark
+      ? Colors.white.withAlpha(23)
+      : const Color(0xFF2D9CFF).withAlpha(41);
   Color get unselectedNavItem =>
-      isDark ? Colors.white.withAlpha(89) : Colors.black.withAlpha(115);
+      isDark ? Colors.white.withAlpha(128) : const Color(0xFF6B8FB3);
 
-  // ─── Input / Search ────────────────────────────────────────────────
-  Color get searchFill =>
-      isDark ? Colors.white.withAlpha(15) : Colors.black.withAlpha(10);
+  Color get searchFill => isDark
+      ? Colors.white.withAlpha(23)
+      : const Color(0xFF2D9CFF).withAlpha(18);
+  Color get searchBorder => isDark
+      ? Colors.white.withAlpha(38)
+      : const Color(0xFF2D9CFF).withAlpha(56);
 
-  Color get searchBorder =>
-      isDark ? Colors.white.withAlpha(20) : Colors.black.withAlpha(20);
-
-  // ─── Switch ────────────────────────────────────────────────────────
   Color get switchInactiveTrack =>
-      isDark ? Colors.white.withAlpha(38) : Colors.black.withAlpha(31);
-
+      isDark ? Colors.white.withAlpha(56) : const Color(0xFFAAC7E4);
   Color get switchInactiveThumb =>
-      isDark ? Colors.white.withAlpha(230) : Colors.white;
+      isDark ? Colors.white.withAlpha(242) : Colors.white;
 
-  // ─── Misc ──────────────────────────────────────────────────────────
-  Color get avatarBorder => isDark ? const Color(0xFF0D1333) : Colors.white;
-
+  Color get avatarBorder => isDark ? const Color(0xFF102B49) : Colors.white;
   Color get timerTrack =>
-      isDark ? const Color(0xFF1A1E40) : const Color(0xFFD8DAE8);
-
-  Color get outlinedBtnBorder =>
-      isDark ? Colors.white.withAlpha(38) : Colors.black.withAlpha(31);
-
+      isDark ? const Color(0xFF25537D) : const Color(0xFFCCE5FF);
+  Color get outlinedBtnBorder => isDark
+      ? Colors.white.withAlpha(66)
+      : const Color(0xFF2D9CFF).withAlpha(102);
   Color get outlinedBtnBg => isDark
-      ? const Color(0xFF1A1E35).withAlpha(128)
-      : Colors.white.withAlpha(204);
+      ? const Color(0xFF173D62).withAlpha(163)
+      : Colors.white.withAlpha(240);
+  Color get iconPlaceholderBg => isDark
+      ? Colors.white.withAlpha(28)
+      : const Color(0xFF2D9CFF).withAlpha(20);
+  Color get chipBg => isDark ? primary.withAlpha(56) : primary.withAlpha(24);
+  Color get progressBarBg => isDark
+      ? Colors.white.withAlpha(31)
+      : const Color(0xFF2D9CFF).withAlpha(28);
+  Color get selectionHighlight => isDark
+      ? Colors.white.withAlpha(26)
+      : const Color(0xFF2D9CFF).withAlpha(20);
 
-  Color get iconPlaceholderBg =>
-      isDark ? Colors.white.withAlpha(20) : Colors.black.withAlpha(13);
-
-  Color get chipBg => isDark ? primary.withAlpha(38) : primary.withAlpha(26);
-
-  Color get progressBarBg =>
-      isDark ? Colors.white.withAlpha(20) : Colors.black.withAlpha(15);
-
-  Color get selectionHighlight =>
-      isDark ? Colors.white.withAlpha(15) : Colors.black.withAlpha(10);
-
-  // ─── ThemeData ─────────────────────────────────────────────────────
-  static ThemeData darkTheme = ThemeData(
+  static final ThemeData darkTheme = ThemeData(
     brightness: Brightness.dark,
+    useMaterial3: true,
     colorScheme: const ColorScheme.dark(
       primary: primary,
       secondary: accent,
-      surface: Color(0xFF141832),
+      surface: Color(0xFF163B60),
       error: error,
+      onPrimary: Colors.white,
+      onSecondary: Colors.white,
+      onSurface: Color(0xFFE9F5FF),
     ),
-    scaffoldBackgroundColor: const Color(0xFF0A0E21),
-    useMaterial3: true,
+    scaffoldBackgroundColor: const Color(0xFF0B1D35),
+    cardColor: const Color(0xFF143354),
+    snackBarTheme: const SnackBarThemeData(
+      behavior: SnackBarBehavior.floating,
+      backgroundColor: Color(0xFF163B60),
+    ),
   );
 
-  static ThemeData lightTheme = ThemeData(
+  static final ThemeData lightTheme = ThemeData(
     brightness: Brightness.light,
+    useMaterial3: true,
     colorScheme: const ColorScheme.light(
       primary: primary,
       secondary: accent,
-      surface: Color(0xFFF0F1F7),
+      surface: Color(0xFFF1F8FF),
       error: error,
+      onPrimary: Colors.white,
+      onSecondary: Colors.white,
+      onSurface: Color(0xFF153A60),
     ),
-    scaffoldBackgroundColor: const Color(0xFFF5F6FA),
-    useMaterial3: true,
+    scaffoldBackgroundColor: const Color(0xFFF7FCFF),
+    cardColor: Colors.white,
+    snackBarTheme: const SnackBarThemeData(
+      behavior: SnackBarBehavior.floating,
+      backgroundColor: Color(0xFF1E4E7F),
+    ),
   );
 }

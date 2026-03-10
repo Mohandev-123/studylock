@@ -221,6 +221,7 @@ class _TimerSetupScreenState extends ConsumerState<TimerSetupScreen> {
   }
 
   Widget _buildClockIcon() {
+    final colors = AppColors.of(context);
     return SizedBox(
       width: 140,
       height: 140,
@@ -233,7 +234,7 @@ class _TimerSetupScreenState extends ConsumerState<TimerSetupScreen> {
             height: 120,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              border: Border.all(color: const Color(0xFF2A2F55), width: 2.5),
+              border: Border.all(color: colors.searchBorder, width: 2.5),
             ),
           ),
           // Blue clock circle
@@ -241,11 +242,11 @@ class _TimerSetupScreenState extends ConsumerState<TimerSetupScreen> {
             width: 70,
             height: 70,
             decoration: BoxDecoration(
-              color: const Color(0xFF2244FF),
+              color: AppColors.primary,
               shape: BoxShape.circle,
               boxShadow: [
                 BoxShadow(
-                  color: const Color(0xFF2244FF).withValues(alpha: 0.4),
+                  color: AppColors.primary.withValues(alpha: 0.35),
                   blurRadius: 20,
                   spreadRadius: 2,
                 ),
@@ -261,11 +262,14 @@ class _TimerSetupScreenState extends ConsumerState<TimerSetupScreen> {
               width: 34,
               height: 34,
               decoration: BoxDecoration(
-                color: const Color(0xFF0D1333),
+                color: colors.surface,
                 shape: BoxShape.circle,
-                border: Border.all(color: const Color(0xFF2244FF), width: 2),
+                border: Border.all(
+                  color: AppColors.primary.withAlpha(153),
+                  width: 2,
+                ),
               ),
-              child: const Icon(Icons.lock, color: Color(0xFF2244FF), size: 16),
+              child: const Icon(Icons.lock, color: AppColors.primary, size: 16),
             ),
           ),
         ],
@@ -274,6 +278,7 @@ class _TimerSetupScreenState extends ConsumerState<TimerSetupScreen> {
   }
 
   Widget _buildScrollPickers() {
+    final colors = AppColors.of(context);
     return SizedBox(
       height: 200,
       child: Stack(
@@ -284,9 +289,9 @@ class _TimerSetupScreenState extends ConsumerState<TimerSetupScreen> {
               height: 64,
               margin: const EdgeInsets.symmetric(horizontal: 30),
               decoration: BoxDecoration(
-                color: AppColors.of(context).selectionHighlight,
+                color: colors.selectionHighlight,
                 borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: AppColors.of(context).searchBorder),
+                border: Border.all(color: colors.searchBorder),
               ),
             ),
           ),
@@ -295,7 +300,7 @@ class _TimerSetupScreenState extends ConsumerState<TimerSetupScreen> {
             child: Text(
               ':',
               style: TextStyle(
-                color: AppColors.of(context).textPrimary,
+                color: colors.textPrimary,
                 fontSize: 40,
                 fontWeight: FontWeight.w300,
               ),
@@ -323,8 +328,8 @@ class _TimerSetupScreenState extends ConsumerState<TimerSetupScreen> {
                           index.toString().padLeft(2, '0'),
                           style: TextStyle(
                             color: isSelected
-                                ? Colors.white
-                                : Colors.white.withValues(
+                                ? colors.textPrimary
+                                : colors.textTertiary.withValues(
                                     alpha: _getOpacity(index, _selectedHours),
                                   ),
                             fontSize: isSelected ? 48 : 30,
@@ -357,8 +362,8 @@ class _TimerSetupScreenState extends ConsumerState<TimerSetupScreen> {
                           index.toString().padLeft(2, '0'),
                           style: TextStyle(
                             color: isSelected
-                                ? Colors.white
-                                : Colors.white.withValues(
+                                ? colors.textPrimary
+                                : colors.textTertiary.withValues(
                                     alpha: _getOpacity(index, _selectedMinutes),
                                   ),
                             fontSize: isSelected ? 48 : 30,
@@ -423,6 +428,7 @@ class _TimerSetupScreenState extends ConsumerState<TimerSetupScreen> {
   }
 
   Widget _buildPresetButtons() {
+    final colors = AppColors.of(context);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Wrap(
@@ -437,13 +443,13 @@ class _TimerSetupScreenState extends ConsumerState<TimerSetupScreen> {
               onPressed: () => _selectPreset(hours),
               style: OutlinedButton.styleFrom(
                 backgroundColor: isSelected
-                    ? const Color(0xFF2244FF)
-                    : Colors.transparent,
-                foregroundColor: Colors.white,
+                    ? AppColors.primary
+                    : colors.outlinedBtnBg,
+                foregroundColor: isSelected ? Colors.white : colors.textPrimary,
                 side: BorderSide(
                   color: isSelected
                       ? AppColors.primary
-                      : AppColors.of(context).outlinedBtnBorder,
+                      : colors.outlinedBtnBorder,
                   width: 1.5,
                 ),
                 shape: RoundedRectangleBorder(

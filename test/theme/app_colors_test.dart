@@ -5,23 +5,23 @@ import 'package:study_lock/core/theme/app_colors.dart';
 void main() {
   group('AppColors - Static constants', () {
     test('primary is blue', () {
-      expect(AppColors.primary, const Color(0xFF2244FF));
+      expect(AppColors.primary, const Color(0xFF2D9CFF));
     });
 
     test('primaryLight is lighter blue', () {
-      expect(AppColors.primaryLight, const Color(0xFF4466FF));
+      expect(AppColors.primaryLight, const Color(0xFF78C8FF));
     });
 
-    test('accent is orange', () {
-      expect(AppColors.accent, const Color(0xFFFF8C00));
+    test('accent is light blue', () {
+      expect(AppColors.accent, const Color(0xFF54B4FF));
     });
 
     test('error is red', () {
-      expect(AppColors.error, const Color(0xFFE53935));
+      expect(AppColors.error, const Color(0xFFD14343));
     });
 
-    test('success is green', () {
-      expect(AppColors.success, const Color(0xFF4CAF50));
+    test('success is green-cyan', () {
+      expect(AppColors.success, const Color(0xFF2FBF8F));
     });
   });
 
@@ -39,27 +39,27 @@ void main() {
     test('scaffoldGradient has 3 dark colors', () {
       final gradient = colors.scaffoldGradient;
       expect(gradient.length, 3);
-      expect(gradient[0], const Color(0xFF0A0E21));
+      expect(gradient[0], const Color(0xFF0B1D35));
     });
 
-    test('textPrimary is white', () {
-      expect(colors.textPrimary, Colors.white);
+    test('textPrimary uses light foreground', () {
+      expect(colors.textPrimary, const Color(0xFFE9F5FF));
     });
 
     test('textSecondary is white with alpha', () {
-      expect(colors.textSecondary, Colors.white.withAlpha(153));
+      expect(colors.textSecondary, Colors.white.withAlpha(186));
     });
 
     test('card is dark', () {
-      expect(colors.card, const Color(0xFF141832).withAlpha(179));
+      expect(colors.card, const Color(0xFF143354).withAlpha(214));
     });
 
     test('bottomNavBg is dark', () {
-      expect(colors.bottomNavBg, const Color(0xFF0D1130));
+      expect(colors.bottomNavBg, const Color(0xFF0F2B49));
     });
 
     test('dialogBg is dark', () {
-      expect(colors.dialogBg, const Color(0xFF1A1E35));
+      expect(colors.dialogBg, const Color(0xFF163B60));
     });
 
     test('scaffoldGradientDecoration returns BoxDecoration with gradient', () {
@@ -83,11 +83,11 @@ void main() {
     test('scaffoldGradient has 3 light colors', () {
       final gradient = colors.scaffoldGradient;
       expect(gradient.length, 3);
-      expect(gradient[0], const Color(0xFFF2F4F8));
+      expect(gradient[0], const Color(0xFFF2FAFF));
     });
 
     test('textPrimary is dark', () {
-      expect(colors.textPrimary, const Color(0xFF1A1A2E));
+      expect(colors.textPrimary, const Color(0xFF153A60));
     });
 
     test('card is white', () {

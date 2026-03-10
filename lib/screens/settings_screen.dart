@@ -52,7 +52,7 @@ class SettingsScreen extends ConsumerWidget {
                 ),
                 _SettingsTileData(
                   icon: Icons.dark_mode,
-                  iconColor: const Color(0xFF9C6ADE),
+                  iconColor: AppColors.primary,
                   title: 'Dark Mode',
                   trailing: _SettingsTrailing.toggle,
                   toggleValue: settings.darkMode,
@@ -133,7 +133,7 @@ class SettingsScreen extends ConsumerWidget {
             ),
             const SizedBox(height: 16),
             Text(
-              'Made with ❤️ for productivity',
+              'Made for distraction-free focus',
               style: TextStyle(color: colors.textTertiary, fontSize: 13),
             ),
           ],

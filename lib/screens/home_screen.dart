@@ -576,7 +576,11 @@ class _TimerRingPainter extends CustomPainter {
       ..shader = SweepGradient(
         startAngle: -pi / 2,
         endAngle: 3 * pi / 2,
-        colors: const [Color(0xFF4466FF), Color(0xFF2244FF), Color(0xFF1133DD)],
+        colors: const [
+          AppColors.primaryLight,
+          AppColors.primary,
+          Color(0xFF167BD7),
+        ],
         stops: const [0.0, 0.5, 1.0],
         transform: const GradientRotation(-pi / 2),
       ).createShader(Rect.fromCircle(center: center, radius: radius))
@@ -597,7 +601,7 @@ class _TimerRingPainter extends CustomPainter {
     final tipX = center.dx + radius * cos(tipAngle);
     final tipY = center.dy + radius * sin(tipAngle);
     final glowPaint = Paint()
-      ..color = const Color(0xFF4466FF).withAlpha(128)
+      ..color = AppColors.primaryLight.withAlpha(140)
       ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 8);
     canvas.drawCircle(Offset(tipX, tipY), 6, glowPaint);
   }
